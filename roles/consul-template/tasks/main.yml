@@ -1,0 +1,9 @@
+---
+
+- name: ensure unzip present
+  yum:
+    name: unzip
+    update_cache: yes
+  become: yes
+
+- include: consul-template.yml

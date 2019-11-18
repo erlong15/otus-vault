@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    install_root_cert_pem: files/ca.pem
+  roles:
+    - gametize.install-root-cert

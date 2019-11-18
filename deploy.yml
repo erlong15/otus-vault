@@ -1,0 +1,42 @@
+---
+
+- name: Add to hosts hostnames
+  hosts: all
+  become: true
+  vars:
+    consul_dns_rec: |
+      192.168.70.150  vault
+      192.168.70.151  nginx
+      192.168.70.152  consul
+  tasks:
+  - name: local dns
+    blockinfile:
+      path: /etc/hosts
+      block: |
+        {{ consul_dns_rec }}
+    tags: common
+
+- name: Install consul
+  tags: consul
+  hosts: consul
+  roles:
+    - role: consul-server
+
+- name: Install hashicorp vault
+  hosts: vaultservers
+  tags: vault
+  roles:
+    - role: vault-deploy
+
+
+- name: Provision consul-template & nginx
+  hosts: nginx
+  tags: nginx
+  become: true
+  vars:
+    consul_ip_port: consul:8500
+    cons_template_dwn_url: https://releases.hashicorp.com/consul-template/0.22.0/consul-template_0.22.0_linux_amd64.zip
+  roles:
+    - role: consul-template
+    - role: sedovandrew.nginx
+
