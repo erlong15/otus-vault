@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sts-yandex-sts
+  labels:
+    app: sts-yandex
+spec:
+  serviceName: sts-yandex
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sts-yandex
+  template:
+    metadata:
+      labels:
+        app: sts-yandex
+    spec:                            
+      containers:
+        - name: task-pv-container
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: "http-server"
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html                               
+  volumeClaimTemplates:
+    - kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: www
+      spec:
+        storageClassName: "yc-network-ssd"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
+
+
+

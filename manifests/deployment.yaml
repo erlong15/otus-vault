@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-pv-storage-sts
+  labels:
+    app: task-pv-storage
+spec:
+  replicas: 3
+  serviceName: task-pv-storage
+  selector:
+    matchLabels:
+      app: task-pv-storage
+  template:
+    metadata:
+      labels:
+        app: task-pv-storage
+    spec:
+      volumes:
+        - name: task-pv-storage
+          persistentVolumeClaim:
+            claimName: task-pv-claim
+        - name: cred-file
+          secret:
+            secretName: dev-db-secret 
+        - name: cache-volume
+          emptyDir: {}  
+        - name: test-volume
+          hostPath:
+            path: /opt/test-pd
+            type: DirectoryOrCreate                             
+      containers:
+        - name: task-pv-container
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: "http-server"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: task-pv-storage
+            - name: cred-file
+              mountPath: /secrets/cloudsql
+              readOnly: true      
+            - mountPath: /cache
+              name: cache-volume 
+            - mountPath: /test-pd
+              name: test-volume                                 
+          env:
+            - name: "MYVAR"
+              value: "MYVAL" 
+            - name: WORDPRESS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dev-db-secret
+                  key: password               
+
+
+
+

@@ -1,0 +1,22 @@
+module "k8s" {
+  source             = "../../modules/k8s"
+  zone               = var.zone
+  cloud_id           = var.cloud_id
+  folder_id          = var.folder_id
+  network_id         = var.network_id
+  subnet_id          = var.subnet_id
+  kubernetes_name    = var.kubernetes_name
+  disk_size          = var.disk_size
+  k8s_master_version = var.k8s_master_version
+  k8s_nodes_version  = var.k8s_nodes_version
+  auto_scale_min     = var.auto_scale_min
+  auto_scale_max     = var.auto_scale_max
+  core_fraction      = var.core_fraction
+  cores              = var.cores
+  memory             = var.memory
+  auto_upgrade       = var.auto_upgrade
+  master_public_ip   = var.master_public_ip
+  cluster_ipv4_range = var.cluster_ipv4_range
+  service_ipv4_range = var.service_ipv4_range
+  node_groups        = var.node_groups
+}

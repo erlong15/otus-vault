@@ -25,7 +25,7 @@ data:
     "pid_file" = "/home/vault/.pid"
 
     "template" = {
-      "contents" = "{{- with secret \"database/creds/vault-role\" -}}postgres://{{ .Data.username }}:{{ .Data.password }}{{- end }}"
+      "contents" = "{{- with secret \"database/creds/vault-role\" -}}mysql://{{ .Data.username }}:{{ .Data.password }}{{- end }}"
       "destination" = "/vault/secrets/db-creds"
     }
 
@@ -55,7 +55,7 @@ data:
     "pid_file" = "/home/vault/.pid"
 
     "template" = {
-      "contents" = "{{- with secret \"database/creds/vault-role\" -}}postgres://{{ .Data.username }}:{{ .Data.password }}{{- end }}"
+      "contents" = "{{- with secret \"database/creds/vault-role\" -}}mysql://{{ .Data.username }}:{{ .Data.password }}{{- end }}"
       "destination" = "/vault/secrets/db-creds"
     }
 

@@ -1,0 +1,58 @@
+zone               = ""
+cloud_id           = ""
+folder_id          = ""
+network_id         = ""
+subnet_id          = ""
+kubernetes_name    = ""
+disk_size          = 64
+k8s_master_version = "1.19"
+k8s_nodes_version  = "1.19"
+auto_scale_min     = 1
+core_fraction      = 100
+cluster_ipv4_range = ""
+service_ipv4_range = ""
+node_groups        = {
+  "ng0" = {
+    auto_scale_max = ""
+    cores          = ""
+    memory         = ""
+    name           = ""
+    subnet_zone    = ""
+    zone_ng        = ""
+    node_labels    = {}
+    node_taints    = []
+    maintenance_window = {
+      win0 = {
+        day        = "sunday"
+        duration   = "3h0m"
+        start_time = "01:00"
+      }
+    }
+  },
+  "ng1" = {
+    auto_scale_max = ""
+    cores          = ""
+    memory         = ""
+    name           = ""
+    subnet_zone    = ""
+    zone_ng        = ""
+    node_labels    = {
+      label = "some lable"
+    }
+    node_taints    = [ 
+      "special=gpu:NoExecute"
+    ]
+    maintenance_window = {
+      win0 = {
+        day        = "monday"
+        duration   = "3h0m"
+        start_time = "01:00"
+      },
+      win1 = {
+        day        = "friday"
+        duration   = "3h0m"
+        start_time = "01:00"
+      }
+    }
+  }
+}
